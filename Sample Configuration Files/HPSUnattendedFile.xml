@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
+    <settings pass="oobeSystem">
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">            		
+			<OEMInformation>
+                <Logo></Logo>
+                <Manufacturer>Gorgo Systems</Manufacturer>
+                <SupportPhone>contact@gorgosystems.net</SupportPhone>
+                <SupportProvider></SupportProvider>
+            </OEMInformation>
+            <OOBE>
+                <HideEULAPage>true</HideEULAPage>
+                <HideLocalAccountScreen>true</HideLocalAccountScreen>
+                <HideOEMRegistrationScreen>true</HideOEMRegistrationScreen>
+                <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
+                <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+                <ProtectYourPC>3</ProtectYourPC>                
+            </OOBE>
+            <UserAccounts>
+                <AdministratorPassword>
+                    <Value>changeme</Value>
+                    <PlainText>true</PlainText>
+                </AdministratorPassword>
+                <LocalAccounts>
+                    <LocalAccount wcm:action="add">
+                        <Description>Local Admin</Description>
+                        <DisplayName>Local Admin</DisplayName>
+                        <Group>Administrators</Group>
+                        <Name>root</Name>
+                        <Password>
+                            <Value>changeme</Value>
+                            <PlainText>true</PlainText>
+                        </Password>
+                    </LocalAccount>
+                </LocalAccounts>
+            </UserAccounts>
+			<AutoLogon>
+                <Password>
+                    <Value>changeme</Value>
+                    <PlainText>true</PlainText>
+                </Password>
+                <Domain></Domain>
+                <Enabled>true</Enabled>
+                <LogonCount>4294967295</LogonCount>
+                <Username>autologonuser</Username>
+            </AutoLogon>
+        </component>
+        <component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <InputLocale>0c0a:0000040a</InputLocale>
+            <SystemLocale>es-ES</SystemLocale>
+            <UILanguage>es-ES</UILanguage>
+            <UILanguageFallback></UILanguageFallback>
+            <UserLocale>es-ES</UserLocale>
+        </component>
+    </settings>
+    <settings pass="generalize">
+        <component name="Microsoft-Windows-PnpSysprep" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <DoNotCleanUpNonPresentDevices>true</DoNotCleanUpNonPresentDevices>
+            <PersistAllDeviceInstalls>true</PersistAllDeviceInstalls>
+        </component>
+    </settings>
+    <settings pass="specialize">
+        <component name="Microsoft-Windows-Deployment" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <RunSynchronous>
+                <RunSynchronousCommand wcm:action="add">
+                    <Description>enable admin account</Description>
+                    <Order>1</Order>
+                    <Path>net user root /active:yes</Path>
+                </RunSynchronousCommand>
+                <RunSynchronousCommand wcm:action="add">
+                    <Path>net user administrator /active:yes</Path>
+                    <Order>2</Order>
+                    <Description>enable admin account</Description>
+                </RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+                    <Path>reg.exe add HKLM\SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet /v ActiveDnsProbeHost /t REG_SZ /d "fake.aaa.aaa" /f</Path>
+                    <Order>3</Order>
+                    <Description>do not detect internet connection to avoid ZDP download</Description>
+                </RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+                    <Path>reg.exe add HKLM\SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet /v ActiveWebProbeHost /t REG_SZ /d "fake.aaa.aaa" /f</Path>
+                    <Order>4</Order>
+                    <Description>do not detect internet connection to avoid ZDP download</Description>
+                </RunSynchronousCommand>
+            </RunSynchronous>
+        </component>
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <RegisteredOrganization>Gorgo Systems</RegisteredOrganization>
+            <TimeZone>Romance Standard Time</TimeZone>
+            <ProductKey>XXXXX-XXXXX-XXXXX-XXXXX-XXXXX</ProductKey>
+            <RegisteredOwner>Gorgo Systems</RegisteredOwner>
+        </component>
+    </settings>
+    <cpi:offlineImage cpi:source="wim:c:/winpe10_x64/win_10_aio_7in1_2004.19041.329.2020_june_x64/sources/install.wim#Windows 10 Pro" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
+</unattend>
