@@ -13,7 +13,7 @@ Check out the [documentation page](https://doc.gorgosystems.com) for details of 
 - High Availability: disks and configuration synchronization between servers.
 - Permanent License: Host Provisioning will not stop working with an expired license.
 
-Here you can download the binaries of Host Provisioning Services.
+Here you can [download](https://github.com/GorgoSystems/Host-Provisioning-Services/releases/latest) the binaries of Host Provisioning Services.
 
 - Host Provisioning Server: use the Administration Console in a browser to configure clients and servers.
 - Host Provisioning Client: install the client in your base images to centrally manage configurations and updates.
